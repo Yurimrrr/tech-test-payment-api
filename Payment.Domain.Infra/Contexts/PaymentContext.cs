@@ -16,7 +16,9 @@ namespace Payment.Domain.Infra.Contexts
         {
         }
 
-        public DbSet<Product> Products { get; set; }
+        public DbSet<Product>? Products { get; set; }
+        public DbSet<Seller>? Sellers { get; set; }
+        public DbSet<Sale>? Sales { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

@@ -16,6 +16,10 @@ namespace Payment.Domain.Entities
             PhoneNumber = phoneNumber;
         }
 
+        public Seller()
+        {
+        }
+
         public string? Name { get; private set; }
         public string? Email { get; private set; }
         public string? CPF { get; private set; }

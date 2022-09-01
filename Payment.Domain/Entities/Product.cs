@@ -13,6 +13,10 @@ namespace Payment.Domain.Entities
             Name = name;
         }
 
+        public Product()
+        {
+        }
+
         public string? Name { get; private set; }
 
 

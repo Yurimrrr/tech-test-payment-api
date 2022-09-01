@@ -8,12 +8,17 @@ namespace Payment.Domain.Entities
 {
     public class Sale : Entity
     {
-        public Sale(DateTime date, Guid sellerId, Seller seller, List<Product> products)
+        public Sale(DateTime date, Seller seller, List<Product> products)
         {
             Date = date;
-            SellerId = sellerId;
             Seller = seller;
             Products = products;
+            Status = "Aguardando pagamento";
+        }
+
+        public Sale()
+        {
+            
         }
 
         public DateTime Date { get; private set; }
@@ -26,6 +31,7 @@ namespace Payment.Domain.Entities
         {
             Status = status;
         }
+
 
     }
 }

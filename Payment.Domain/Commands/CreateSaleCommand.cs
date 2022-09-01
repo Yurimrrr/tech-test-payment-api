@@ -31,7 +31,7 @@ namespace Payment.Domain.Commands
             AddNotifications(
                 new Contract()
                     .Requires()
-                    .IsNull(Date,"Date", "Data não pode ser vazia!")
+                    .IsNotNull(Date,"Date", "Data não pode ser vazia!")
             );;
         }
     }
