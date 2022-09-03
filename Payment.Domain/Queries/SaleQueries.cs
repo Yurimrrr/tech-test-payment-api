@@ -8,7 +8,7 @@ using Payment.Domain.Entities;
 
 namespace Payment.Domain.Queries
 {
-    public static class UserQueries
+    public static class SaleQueries
     {
         /*
         public static Expression<Func<User, bool>> GetAll(string user)

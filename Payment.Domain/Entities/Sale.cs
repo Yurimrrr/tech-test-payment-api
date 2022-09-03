@@ -13,7 +13,6 @@ namespace Payment.Domain.Entities
             Date = date;
             Seller = seller;
             Products = products;
-            Status = "Aguardando pagamento";
         }
 
         public Sale()
@@ -25,9 +24,9 @@ namespace Payment.Domain.Entities
         public Guid SellerId { get; private set; }
         public Seller? Seller { get; set; }
         public List<Product>? Products { get; set; }
-        public string? Status { get; set; }
+        public StatusSale? Status { get; set; }
 
-        public void UpdateStatus(string status)
+        public void UpdateStatus(StatusSale status)
         {
             Status = status;
         }

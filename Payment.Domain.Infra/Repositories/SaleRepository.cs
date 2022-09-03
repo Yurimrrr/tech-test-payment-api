@@ -18,6 +18,7 @@ namespace Payment.Domain.Infra.Repositories
         public SaleRepository(DataContext context)
         {
             _context = context;
+
         }
 
         public void Create(Sale user)

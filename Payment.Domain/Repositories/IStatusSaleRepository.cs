@@ -3,7 +3,8 @@ using Payment.Domain.Repositories.Generic;
 
 namespace Payment.Domain.Repositores
 {
-    public interface ISellerRepository : IRepository<Seller>
+    public interface IStatusSaleRepository : IRepository<StatusSale>
     {
+        StatusSale GetByCodigo(int codigo);
     }
 }

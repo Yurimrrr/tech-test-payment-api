@@ -11,41 +11,51 @@ using Payment.Domain.Repositores;
 
 namespace Payment.Domain.Infra.Repositories
 {
-    public class ProductRepository : IProductRepository
+    public class StatusSaleRepository : IStatusSaleRepository
     {
         private readonly DataContext _context;
 
-        public ProductRepository(DataContext context)
+        public StatusSaleRepository(DataContext context)
         {
             _context = context;
+
         }
 
-        public void Create(Product user)
+        public void Create(StatusSale user)
         {
-            _context.Products.Add(user);
+            _context.StatusSales.Add(user);
             _context.SaveChanges();
         }
 
-        public IEnumerable<Product> GetAll()
+        public IEnumerable<StatusSale> GetAll()
         {
             return _context
-                .Products
+                .StatusSales
                 .AsNoTracking()
                 .OrderBy(x => x.DateRegistration);
         }
 
-        public Product GetById(Guid id)
+        public StatusSale GetById(Guid id)
         {
             return _context
-                .Products
+                .StatusSales
                 .AsNoTracking()
                 .FirstOrDefault(x => x.Id == id);
-        }    
+        }   
+        
+        public StatusSale GetByCodigo(int codigo)
+        {
+            return _context
+               .StatusSales
+               .AsNoTracking()
+               .FirstOrDefault(x => x.Codigo == codigo);
+        }
 
-        public void Update(Product todo)
+        public void Update(StatusSale todo)
         {
             _context.Entry(todo).State = EntityState.Modified;
             _context.SaveChanges();
         }
+
     }
 }

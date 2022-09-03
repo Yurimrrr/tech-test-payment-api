@@ -5,5 +5,6 @@ namespace Payment.Domain.Repositores
 {
     public interface ISaleRepository : IRepository<Sale>
     {
+
     }
 }
