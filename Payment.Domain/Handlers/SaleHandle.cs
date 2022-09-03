@@ -14,7 +14,8 @@ namespace Payment.Domain.Handlers
 {
     public class SaleHandle : 
         Notifiable,
-        IHandler<CreateSaleCommand>
+        IHandler<CreateSaleCommand>,
+        IHandler<UpdateSaleStatusCommand>
     {
         private readonly ISaleRepository _repository;
         public SaleHandle(ISaleRepository repository)
@@ -54,6 +55,25 @@ namespace Payment.Domain.Handlers
 
             return new GenericCommandResult(true, "Venda realizada!", sale);
             
+        }
+
+        public ICommandResult Handle(UpdateSaleStatusCommand command)
+        {
+            command.Validate();
+            if (command.Invalid)
+                return new GenericCommandResult(false, "Erro ao salvar a venda!", command.Notifications);
+
+            Sale sale = _repository.GetById(command.Id);
+
+            if(sale == null)
+            {
+                return new GenericCommandResult(false, "Venda não encontrada!", command.Notifications);
+            }
+
+            
+
+
+            throw new NotImplementedException();
         }
     }
 }

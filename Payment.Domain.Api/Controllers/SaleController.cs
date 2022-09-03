@@ -13,17 +13,18 @@ namespace Payment.Domain.Api.Controllers
 
         [Route("")]
         [HttpGet]
-        public IEnumerable<Sale> GetAll(
+        public async Task<IActionResult> GetAll(
             [FromServices]ISaleRepository repository
         )
         {
-            return repository.GetAll();
+            var sales = repository.GetAll();
+            return sales.Any() ? Ok(sales) : NotFound("Não foi encontrada nenhuma venda.");
         }
 
 
         [Route("")]
         [HttpPost]
-        public GenericCommandResult Create(
+        public async Task<ActionResult<GenericCommandResult>> Create(
             [FromBody]CreateSaleCommand command,
             [FromServices]SaleHandle handler
             )
@@ -32,15 +33,15 @@ namespace Payment.Domain.Api.Controllers
         }
 
 
-        [Route("")]
-        [HttpPut]
-        public GenericCommandResult Update(
-            [FromBody] CreateSaleCommand command,
+        [HttpPut("{id:guid}")]
+        public async Task<ActionResult<GenericCommandResult>> Update(
+            [FromBody] UpdateSaleStatusCommand command,
             [FromServices] SaleHandle handler
             )
         {
             return (GenericCommandResult)handler.Handle(command);
         }
+
 
 
     }
