@@ -5,6 +5,6 @@ namespace Payment.Domain.Repositores
 {
     public interface IStatusSaleRepository : IRepository<StatusSale>
     {
-        StatusSale GetByCodigo(int codigo);
+        StatusSale GetById(int id);
     }
 }

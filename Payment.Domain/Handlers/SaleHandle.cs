@@ -35,7 +35,7 @@ namespace Payment.Domain.Handlers
             if(command.Products.Count() == 0)
                 return new GenericCommandResult(false, "A venda deve possuir pelo menos 1 produto!", command.Notifications);
 
-            StatusSale status = _statusRepository.GetByCodigo(0);
+            StatusSale status = _statusRepository.GetById(1);
 
             List<Product> products = new List<Product>();
             
@@ -75,41 +75,17 @@ namespace Payment.Domain.Handlers
             Sale sale = _repository.GetById(id);
 
             if (sale == null)
-            {
                 return new GenericCommandResult(false, "Venda não encontrada!", command.Notifications);
-            }
 
             StatusSale currentStatus = _statusRepository.GetById(sale.StatusId);
 
-            StatusSale status = _statusRepository.GetByCodigo((int)command.Status);
-
+            StatusSale status = _statusRepository.GetById((int)command.Status);
             if (status == null)
-            {
                 return new GenericCommandResult(false, "Status requisitado não existe!", command.Notifications);
-            }
-
-            if (currentStatus.Codigo == status.Codigo)
-            {
-                return new GenericCommandResult(false, $"Status da venda já está em {status.Name}!", command.Notifications);
-            }
-
-            if (currentStatus.Codigo == (int)StatusVenda.AguardandoPagamento
-                && (status.Codigo != (int)StatusVenda.PagamentoAprovado
-                    && status.Codigo != (int)StatusVenda.Cancelado))
-            {
+           
+            bool validaStatus = currentStatus.ValidaStatus(status.Id);
+            if(!validaStatus)
                 return new GenericCommandResult(false, $"Não se pode definir {status.Name} enquanto o status for {currentStatus.Name}!", command.Notifications);
-            }
-            else if (currentStatus.Codigo == (int)StatusVenda.PagamentoAprovado
-                && (status.Codigo != (int)StatusVenda.EnviadoTransportadora
-                    && status.Codigo != (int)StatusVenda.Cancelado))
-            {
-                return new GenericCommandResult(false, $"Não se pode definir {status.Name} enquanto o status for {currentStatus.Name}!", command.Notifications);
-            }
-            else if (currentStatus.Codigo == (int)StatusVenda.EnviadoTransportadora
-                && (status.Codigo != (int)StatusVenda.Entregue))
-            {
-                return new GenericCommandResult(false, $"Não se pode definir {status.Name} enquanto o status for {currentStatus.Name}!", command.Notifications);
-            }
 
             sale.UpdateStatus(status.Id);
 

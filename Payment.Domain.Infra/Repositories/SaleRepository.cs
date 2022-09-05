@@ -33,6 +33,7 @@ namespace Payment.Domain.Infra.Repositories
                 .AsNoTracking()
                 .Include(x => x.Products)
                 .Include(x => x.Seller)
+                .Include(x => x.StatusSale)
                 .OrderBy(x => x.DateRegistration);
         }
 

@@ -22,7 +22,6 @@
 
   <ItemGroup>
     <Folder Include="CommandTests\" />
-    <Folder Include="EntityTests\" />
     <Folder Include="QueryTests\" />
   </ItemGroup>
 

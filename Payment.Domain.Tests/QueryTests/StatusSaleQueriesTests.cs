@@ -13,18 +13,18 @@ public class StatusSaleQueriesTests
 
     public StatusSaleQueriesTests(List<StatusSale> status)
     {
-        _status.Add(new StatusSale("Aguardando Pagamento", 0));
-        _status.Add(new StatusSale("Pagamento Aprovado", 1));
-        _status.Add(new StatusSale("Enviado Transportadora", 2));
-        _status.Add(new StatusSale("Cancelado", 3));
-        _status.Add(new StatusSale("Entregue", 4));
+        _status.Add(new StatusSale(1, "Aguardando Pagamento"));
+        _status.Add(new StatusSale(2, "Pagamento Aprovado"));
+        _status.Add(new StatusSale(3, "Enviado Transportadora"));
+        _status.Add(new StatusSale(4, "Cancelado"));
+        _status.Add(new StatusSale(5, "Entregue"));
 
     }
 
     [TestMethod]
-    public void Dada_a_consulta_deve_retornar_status_com_codigo_2()
+    public void Dada_a_consulta_deve_retornar_status_com_id_2()
     {
-        var result = _status.AsQueryable().Where(StatusSaleQueries.GetByCodigo(2));
+        var result = _status.AsQueryable().Where(StatusSaleQueries.GetById(2));
         Assert.AreEqual(1, result.Count());
     }
 

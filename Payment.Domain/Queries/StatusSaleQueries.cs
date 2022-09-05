@@ -10,13 +10,10 @@ namespace Payment.Domain.Queries
 {
     public static class StatusSaleQueries
     {
-        
-        public static Expression<Func<StatusSale, bool>> GetByCodigo(int codigo)
+        public static Expression<Func<StatusSale, bool>> GetById(int id)
         {
-            return x => x.Codigo == codigo;
+            return x => x.Id == id;
         }
-        
-
     }
 
 }

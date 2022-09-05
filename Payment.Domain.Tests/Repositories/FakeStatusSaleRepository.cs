@@ -14,14 +14,14 @@ namespace Payment.Domain.Tests.Repositories
             throw new NotImplementedException();
         }
 
-        public StatusSale GetByCodigo(int codigo)
+        public Payment.Domain.Entities.StatusSale GetById(int t)
         {
             return new StatusSale();
         }
 
-        public Payment.Domain.Entities.StatusSale GetById(Guid t)
+        public StatusSale GetById(Guid t)
         {
-            return new StatusSale();
+            throw new NotImplementedException();
         }
 
         public void Update(Payment.Domain.Entities.StatusSale t)

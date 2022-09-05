@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -13,6 +14,7 @@ namespace Payment.Domain.Entities
             Id = Guid.NewGuid();
             DateRegistration = DateTime.Now;
         }
+        [Key()]
         public Guid Id { get; private set; }
 
         public DateTime DateRegistration { get; private set; }

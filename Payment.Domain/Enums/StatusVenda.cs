@@ -8,10 +8,10 @@ namespace Payment.Domain.Enums
 {
     public enum StatusVenda
     {
-        AguardandoPagamento = 0,
-        PagamentoAprovado = 1,
-        EnviadoTransportadora = 2,
-        Cancelado = 3,
-        Entregue = 4,
+        AguardandoPagamento = 1,
+        PagamentoAprovado = 2,
+        EnviadoTransportadora = 3,
+        Cancelado = 4,
+        Entregue = 5,
     }
 }

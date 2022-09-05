@@ -23,11 +23,11 @@ namespace Payment.Domain.Infra.Repositories
             {
                 var status = new List<StatusSale>()
                 {
-                    new StatusSale("Aguardando Pagamento", 0),
-                    new StatusSale("Pagamento Aprovado", 1),
-                    new StatusSale("Enviado Transportadora", 2),
-                    new StatusSale("Cancelado", 3),
-                    new StatusSale("Entregue", 4)
+                    new StatusSale(1,"Aguardando Pagamento"),
+                    new StatusSale(2,"Pagamento Aprovado"),
+                    new StatusSale(3,"Enviado Transportadora"),
+                    new StatusSale(4,"Cancelado"),
+                    new StatusSale(5,"Entregue")
                 };
 
                 context.StatusSales.AddRange(status);
@@ -51,7 +51,7 @@ namespace Payment.Domain.Infra.Repositories
                 .OrderBy(x => x.DateRegistration);
         }
 
-        public StatusSale GetById(Guid id)
+        public StatusSale GetById(int id)
         {
             return _context
                 .StatusSales
@@ -59,13 +59,6 @@ namespace Payment.Domain.Infra.Repositories
                 .FirstOrDefault(x => x.Id == id);
         }   
         
-        public StatusSale GetByCodigo(int codigo)
-        {
-            return _context
-               .StatusSales
-               .AsNoTracking()
-               .FirstOrDefault(StatusSaleQueries.GetByCodigo(codigo));
-        }
 
         public void Update(StatusSale todo)
         {
@@ -73,5 +66,9 @@ namespace Payment.Domain.Infra.Repositories
             _context.SaveChanges();
         }
 
+        public StatusSale GetById(Guid t)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
