@@ -91,7 +91,7 @@ namespace Payment.Domain.Handlers
 
             _repository.Update(sale);
 
-            return new GenericCommandResult(true, $"Status da venda atualizado para {status.Name}!", command.Notifications);
+            return new GenericCommandResult(true, $"Status da venda atualizado para {status.Name}!", sale);
         }
 
         public ICommandResult Handle(UpdateSaleStatusCommand command)

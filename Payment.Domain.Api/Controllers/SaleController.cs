@@ -31,6 +31,16 @@ namespace Payment.Domain.Api.Controllers
             return status.Any() ? Ok(status) : NotFound("Não foi encontrada nenhum status.");
         }
 
+        [HttpGet("{id}")]
+        public async Task<IActionResult> GetSaleById(
+            Guid id,
+            [FromServices] ISaleRepository repository
+        )
+        {
+            var sale = repository.GetById(id);
+            return (sale != null) ? Ok(sale) : NotFound("Não foi encontrada nenhuma venda.");
+        }
+
         [Route("")]
         [HttpPost]
         public async Task<ActionResult<GenericCommandResult>> Create(

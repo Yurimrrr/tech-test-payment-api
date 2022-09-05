@@ -44,6 +44,7 @@ namespace Payment.Domain.Infra.Repositories
                 .AsNoTracking()
                 .Include(x => x.Products)
                 .Include(x => x.Seller)
+                .Include(x => x.StatusSale)
                 .FirstOrDefault(x => x.Id == id);
         }    
 
