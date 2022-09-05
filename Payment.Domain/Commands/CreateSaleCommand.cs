@@ -6,6 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Payment.Domain.Commands.Contracts;
+using System.Xml.Linq;
 
 namespace Payment.Domain.Commands
 {
@@ -31,8 +32,12 @@ namespace Payment.Domain.Commands
             AddNotifications(
                 new Contract()
                     .Requires()
-                    .IsNotNull(Date,"Date", "Data não pode ser vazia!")
-            );;
+                    .IsNotNull(Date, "Date", "Data não pode ser vazia!")
+                    .HasMinLen(Seller.Name, 2, "Seller.Name", "Nome deve ter mais caracteres")
+                    .IsEmail(Seller.Email, "Seller.Email", "Digite um Email valido!")
+                    .HasMinLen(Seller.CPF, 11, "Seller.CPF", "Digite um CPF valido!")
+                    .HasMinLen(Seller.PhoneNumber, 11, "Seller.PhoneNumber", "Digite um numero valido!")
+            );
         }
     }
 }

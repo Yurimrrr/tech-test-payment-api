@@ -14,9 +14,13 @@ namespace Payment.Domain.Entities
             Codigo = codigo;
         }
 
+        public StatusSale()
+        {
+        }
 
-        public string? Name { get; private set; }
-        public int? Codigo { get; private set; }
+        public Guid Id { get; set; }
+        public string? Name { get; set; }
+        public int? Codigo { get; set; }
 
 
     }

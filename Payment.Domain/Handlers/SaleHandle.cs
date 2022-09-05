@@ -32,8 +32,13 @@ namespace Payment.Domain.Handlers
             if (command.Invalid)
                 return new GenericCommandResult(false, "Erro ao salvar a venda!", command.Notifications);
 
-            List<Product> products = new List<Product>();
+            if(command.Products.Count() == 0)
+                return new GenericCommandResult(false, "A venda deve possuir pelo menos 1 produto!", command.Notifications);
 
+            StatusSale status = _statusRepository.GetByCodigo(0);
+
+            List<Product> products = new List<Product>();
+            
             foreach (var _product in command.Products)
             {
                 Product newProduct = new Product(_product.Name);
@@ -45,13 +50,14 @@ namespace Payment.Domain.Handlers
                 command.Seller.Email, 
                 command.Seller.CPF,
                 command.Seller.PhoneNumber
-                );
+            );
 
             var sale = new Sale(
                 command.Date,
                 seller,
-                products
-                );
+                products,
+                status.Id
+            );
 
             //Salva
             _repository.Create(sale);
@@ -60,52 +66,61 @@ namespace Payment.Domain.Handlers
             
         }
 
-        public ICommandResult Handle(UpdateSaleStatusCommand command)
+        public ICommandResult Handle(UpdateSaleStatusCommand command, Guid id)
         {
             command.Validate();
             if (command.Invalid)
                 return new GenericCommandResult(false, "Erro ao salvar a venda!", command.Notifications);
 
-            Sale sale = _repository.GetById(command.Id);
+            Sale sale = _repository.GetById(id);
 
             if (sale == null)
             {
                 return new GenericCommandResult(false, "Venda não encontrada!", command.Notifications);
             }
 
-            StatusSale status = _statusRepository.GetByCodigo(command.Status.GetHashCode());
+            StatusSale currentStatus = _statusRepository.GetById(sale.StatusId);
+
+            StatusSale status = _statusRepository.GetByCodigo((int)command.Status);
 
             if (status == null)
             {
                 return new GenericCommandResult(false, "Status requisitado não existe!", command.Notifications);
             }
 
-            if (sale.Status.Codigo == status.Codigo)
+            if (currentStatus.Codigo == status.Codigo)
             {
                 return new GenericCommandResult(false, $"Status da venda já está em {status.Name}!", command.Notifications);
             }
 
-            if (sale.Status.Codigo == (int)StatusVenda.AguardandoPagamento
+            if (currentStatus.Codigo == (int)StatusVenda.AguardandoPagamento
                 && (status.Codigo != (int)StatusVenda.PagamentoAprovado
                     && status.Codigo != (int)StatusVenda.Cancelado))
             {
-                return new GenericCommandResult(false, $"Status da venda já está em {status.Name}!", command.Notifications);
+                return new GenericCommandResult(false, $"Não se pode definir {status.Name} enquanto o status for {currentStatus.Name}!", command.Notifications);
             }
-            else if (sale.Status.Codigo == (int)StatusVenda.PagamentoAprovado
+            else if (currentStatus.Codigo == (int)StatusVenda.PagamentoAprovado
                 && (status.Codigo != (int)StatusVenda.EnviadoTransportadora
                     && status.Codigo != (int)StatusVenda.Cancelado))
             {
-                return new GenericCommandResult(false, $"Status da venda já está em {status.Name}!", command.Notifications);
+                return new GenericCommandResult(false, $"Não se pode definir {status.Name} enquanto o status for {currentStatus.Name}!", command.Notifications);
             }
-            else if (sale.Status.Codigo == (int)StatusVenda.EnviadoTransportadora
+            else if (currentStatus.Codigo == (int)StatusVenda.EnviadoTransportadora
                 && (status.Codigo != (int)StatusVenda.Entregue))
             {
-                return new GenericCommandResult(false, $"Status da venda já está em {status.Name}!", command.Notifications);
+                return new GenericCommandResult(false, $"Não se pode definir {status.Name} enquanto o status for {currentStatus.Name}!", command.Notifications);
             }
 
-            sale.UpdateStatus(status);
+            sale.UpdateStatus(status.Id);
+
+            _repository.Update(sale);
 
             return new GenericCommandResult(true, $"Status da venda atualizado para {status.Name}!", command.Notifications);
+        }
+
+        public ICommandResult Handle(UpdateSaleStatusCommand command)
+        {
+            throw new NotImplementedException();
         }
     }
 }

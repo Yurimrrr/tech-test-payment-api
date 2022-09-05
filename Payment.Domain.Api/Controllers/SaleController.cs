@@ -21,6 +21,15 @@ namespace Payment.Domain.Api.Controllers
             return sales.Any() ? Ok(sales) : NotFound("Não foi encontrada nenhuma venda.");
         }
 
+        [Route("getstatus")]
+        [HttpGet]
+        public async Task<IActionResult> GetAllStatus(
+            [FromServices] IStatusSaleRepository repository
+        )
+        {
+            var status = repository.GetAll();
+            return status.Any() ? Ok(status) : NotFound("Não foi encontrada nenhum status.");
+        }
 
         [Route("")]
         [HttpPost]
@@ -33,13 +42,14 @@ namespace Payment.Domain.Api.Controllers
         }
 
 
-        [HttpPut("{id:guid}")]
+        [HttpPut("{id}")]
         public async Task<ActionResult<GenericCommandResult>> Update(
+            Guid id,
             [FromBody] UpdateSaleStatusCommand command,
             [FromServices] SaleHandle handler
             )
         {
-            return (GenericCommandResult)handler.Handle(command);
+            return (GenericCommandResult)handler.Handle(command, id);
         }
 
 

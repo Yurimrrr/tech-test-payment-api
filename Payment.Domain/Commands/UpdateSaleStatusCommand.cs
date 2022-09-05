@@ -16,13 +16,11 @@ namespace Payment.Domain.Commands
         {
         }
 
-        public UpdateSaleStatusCommand(Guid id, StatusVenda status)
+        public UpdateSaleStatusCommand(StatusVenda status)
         {
-            Id = id;
             Status = status;
         }
 
-        public Guid Id { get; set; }
         public StatusVenda Status { get; set; }
 
         public void Validate()

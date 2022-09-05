@@ -8,11 +8,12 @@ namespace Payment.Domain.Entities
 {
     public class Sale : Entity
     {
-        public Sale(DateTime date, Seller seller, List<Product> products)
+        public Sale(DateTime date, Seller seller, List<Product> products, Guid status)
         {
             Date = date;
             Seller = seller;
             Products = products;
+            StatusId = status;
         }
 
         public Sale()
@@ -22,13 +23,14 @@ namespace Payment.Domain.Entities
 
         public DateTime Date { get; private set; }
         public Guid SellerId { get; private set; }
-        public Seller? Seller { get; set; }
+        public Seller Seller { get; set; }
         public List<Product>? Products { get; set; }
-        public StatusSale? Status { get; set; }
+        public Guid StatusId { get; set; }
+        public StatusSale StatusSale { get; set; }
 
-        public void UpdateStatus(StatusSale status)
+        public void UpdateStatus(Guid status)
         {
-            Status = status;
+            StatusId = status;
         }
 
 

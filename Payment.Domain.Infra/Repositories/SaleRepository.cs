@@ -18,13 +18,12 @@ namespace Payment.Domain.Infra.Repositories
         public SaleRepository(DataContext context)
         {
             _context = context;
-
         }
 
-        public void Create(Sale user)
+        public void Create(Sale sale)
         {
-            _context.Sales.Add(user);
-            _context.SaveChanges();
+            _context.Sales.Add(sale);
+            _context.SaveChangesAsync();
         }
 
         public IEnumerable<Sale> GetAll()
@@ -47,9 +46,9 @@ namespace Payment.Domain.Infra.Repositories
                 .FirstOrDefault(x => x.Id == id);
         }    
 
-        public void Update(Sale todo)
+        public void Update(Sale sale)
         {
-            _context.Entry(todo).State = EntityState.Modified;
+            _context.Entry(sale).State = EntityState.Modified;
             _context.SaveChanges();
         }
     }

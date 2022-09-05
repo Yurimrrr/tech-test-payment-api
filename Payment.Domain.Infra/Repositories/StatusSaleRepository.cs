@@ -19,6 +19,22 @@ namespace Payment.Domain.Infra.Repositories
         {
             _context = context;
 
+            if (!context.StatusSales.Any())
+            {
+                var status = new List<StatusSale>()
+                {
+                    new StatusSale("Aguardando Pagamento", 0),
+                    new StatusSale("Pagamento Aprovado", 1),
+                    new StatusSale("Enviado Transportadora", 2),
+                    new StatusSale("Cancelado", 3),
+                    new StatusSale("Entregue", 4)
+                };
+
+                context.StatusSales.AddRange(status);
+
+                context.SaveChanges();
+
+            }
         }
 
         public void Create(StatusSale user)
@@ -48,7 +64,7 @@ namespace Payment.Domain.Infra.Repositories
             return _context
                .StatusSales
                .AsNoTracking()
-               .FirstOrDefault(x => x.Codigo == codigo);
+               .FirstOrDefault(StatusSaleQueries.GetByCodigo(codigo));
         }
 
         public void Update(StatusSale todo)
