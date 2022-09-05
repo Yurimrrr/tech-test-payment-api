@@ -21,7 +21,7 @@ namespace Payment.Domain.Tests.EntityTests
         [DataRow((int)StatusVenda.EnviadoTransportadora, (int)StatusVenda.Cancelado)]
         public void Validacao_status_deve_retornar_false_em_casos_incorretos(int currentStatus, int newStatus)
         {
-            StatusSale statusSale = new StatusSale(currentStatus);
+            StatusSale statusSale = new (currentStatus);
 
             bool retorno = statusSale.ValidaStatus(newStatus);
 
@@ -36,7 +36,7 @@ namespace Payment.Domain.Tests.EntityTests
         [DataRow((int)StatusVenda.EnviadoTransportadora, (int)StatusVenda.Entregue)]
         public void Validacao_status_deve_retornar_true_em_casos_corretos(int currentStatus, int newStatus)
         {
-            StatusSale statusSale = new StatusSale(currentStatus);
+            StatusSale statusSale = new (currentStatus);
 
             bool retorno = statusSale.ValidaStatus(newStatus);
 

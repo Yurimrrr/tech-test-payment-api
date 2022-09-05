@@ -32,20 +32,20 @@ namespace Payment.Domain.Handlers
             if (command.Invalid)
                 return new GenericCommandResult(false, "Erro ao salvar a venda!", command.Notifications);
 
-            if(command.Products.Count() == 0)
+            if(command.Products.Count == 0)
                 return new GenericCommandResult(false, "A venda deve possuir pelo menos 1 produto!", command.Notifications);
 
             StatusSale status = _statusRepository.GetById(1);
 
-            List<Product> products = new List<Product>();
+            List<Product> products = new();
             
             foreach (var _product in command.Products)
             {
-                Product newProduct = new Product(_product.Name);
+                Product newProduct = new (_product.Name);
                 products.Add(newProduct);
             }
 
-            Seller seller = new Seller(
+            Seller seller = new(
                 command.Seller.Name, 
                 command.Seller.Email, 
                 command.Seller.CPF,
@@ -90,6 +90,8 @@ namespace Payment.Domain.Handlers
             sale.UpdateStatus(status.Id);
 
             _repository.Update(sale);
+
+            sale = _repository.GetById(id);
 
             return new GenericCommandResult(true, $"Status da venda atualizado para {status.Name}!", sale);
         }

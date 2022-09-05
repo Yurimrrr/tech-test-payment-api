@@ -9,16 +9,15 @@ namespace Payment.Domain.Tests.QueryTests;
 [TestClass]
 public class StatusSaleQueriesTests
 {
-    private readonly List<StatusSale> _status = new List<StatusSale>();
+    private readonly List<StatusSale> _status = new();
 
-    public StatusSaleQueriesTests(List<StatusSale> status)
+    public StatusSaleQueriesTests()
     {
         _status.Add(new StatusSale(1, "Aguardando Pagamento"));
         _status.Add(new StatusSale(2, "Pagamento Aprovado"));
         _status.Add(new StatusSale(3, "Enviado Transportadora"));
         _status.Add(new StatusSale(4, "Cancelado"));
         _status.Add(new StatusSale(5, "Entregue"));
-
     }
 
     [TestMethod]

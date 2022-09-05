@@ -51,7 +51,7 @@ namespace Payment.Domain.Infra.Repositories
         public void Update(Sale sale)
         {
             _context.Entry(sale).State = EntityState.Modified;
-            _context.SaveChanges();
+            _context.SaveChangesAsync();
         }
     }
 }

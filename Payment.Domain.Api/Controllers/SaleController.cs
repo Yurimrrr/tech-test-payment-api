@@ -21,7 +21,7 @@ namespace Payment.Domain.Api.Controllers
             return sales.Any() ? Ok(sales) : NotFound("Não foi encontrada nenhuma venda.");
         }
 
-        [Route("getstatus")]
+        [Route("visualizarStatusExistentes")]
         [HttpGet]
         public async Task<IActionResult> GetAllStatus(
             [FromServices] IStatusSaleRepository repository

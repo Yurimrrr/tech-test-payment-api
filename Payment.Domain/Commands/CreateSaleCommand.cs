@@ -32,7 +32,7 @@ namespace Payment.Domain.Commands
             AddNotifications(
                 new Contract()
                     .Requires()
-                    .IsNotNull(Date, "Date", "Data não pode ser vazia!")
+                    .IsNotNullOrEmpty(Date.ToString(), "Date", "Data não pode ser vazia!")
                     .HasMinLen(Seller.Name, 2, "Seller.Name", "Nome deve ter mais caracteres")
                     .IsEmail(Seller.Email, "Seller.Email", "Digite um Email valido!")
                     .HasMinLen(Seller.CPF, 11, "Seller.CPF", "Digite um CPF valido!")
